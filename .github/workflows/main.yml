@@ -1,0 +1,25 @@
+name: main
+
+on:
+  push : 
+    branches : [master]
+
+jobs:
+  build:
+    runs-on : ubuntu-latest
+    steps:
+      - name  : 'checkout'
+        uses :  actions/checkout@v4
+      - name  : 'install'
+        uses  :  actions/setup-node@v4
+        with  :
+          node-version: '14.0'
+      - name : 'npm install'
+        run : npm install
+      - name : 'run'
+        run : node app.js
+      - name : 'commit and push'
+        uses : Andro999b/push@v1.3
+        with :
+          github_token : ${{ secrets.GITHUB_TOKEN}}
+
